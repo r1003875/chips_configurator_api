@@ -1,1 +1,2 @@
-# chips_configurator
+# local development
+`npm run dev`

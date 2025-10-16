@@ -1,0 +1,28 @@
+{
+  "name": "chips_configurator_api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "devDependencies": {
+    "chalk": "^5.6.2",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.1"
+  },
+  "scripts": {
+    "dev": "node --watch index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r1003875/chips_configurator_api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/r1003875/chips_configurator_api/issues"
+  },
+  "homepage": "https://github.com/r1003875/chips_configurator_api#readme",
+  "dependencies": {
+    "config": "^4.1.1"
+  }
+}
