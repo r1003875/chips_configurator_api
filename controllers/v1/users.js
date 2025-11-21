@@ -9,7 +9,10 @@ const getAll = (req, res)=>{
             "users": users
         }
     }))
-    .catch(err => res.status(500).json({ message: err.message }));
+    .catch(err => res.status(500).json({
+        "status": "error",
+        "message": err.message,
+    }))
 }
 
 const getById = (req, res) => {
