@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const mongoURI = config.get('db.uri')|| process.env.MONGODB_URI;
+console.log("Using Mongo URI:", mongoURI);
 mongoose.connect(mongoURI)
 .then(() => console.log("✅ MongoDB connected"))
 .catch(err => console.error("❌ MongoDB connection error:", err));
