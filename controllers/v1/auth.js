@@ -21,23 +21,31 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const user = await User.authenticate()(req.body.email, req.body.password)
-    .then(user => {
-        if (!user) {
+    try {
+        const result = await new Promise((resolve, reject) => {
+            User.authenticate()(req.body.email, req.body.password, (err, user) => {
+                if (err) reject(err);
+                else resolve(user);
+            });
+        });
+
+        if (!result) {
             return res.status(401).json({
                 "status": "error",
                 "message": "Authentication failed",
             });
         }
-        res.json({
+
+        return res.json({
             "status": "success",
             "message": "User logged in",
         });
-    })
-    .catch(err => res.status(500).json({
-        "status": "error",
-        "message": err.message,
-    }));
+    } catch (err) {
+        return res.status(500).json({
+            "status": "error",
+            "message": err.message,
+        });
+    }
 }
 
 module.exports = {
