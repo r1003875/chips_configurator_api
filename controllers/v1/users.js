@@ -30,7 +30,10 @@ const getById = (req, res) => {
             }
         });
     })
-    .catch(err => res.status(500).json({ message: err.message }));
+    .catch(err => res.status(500).send({
+        "status": "error",
+        "message": err.message,
+    }));
 }
 
 const create = (req, res) => {
