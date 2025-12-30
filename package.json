@@ -23,6 +23,9 @@
   },
   "homepage": "https://github.com/r1003875/chips_configurator_api#readme",
   "dependencies": {
-    "config": "^4.1.1"
+    "config": "^4.1.1",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^9.0.1"
   }
 }
