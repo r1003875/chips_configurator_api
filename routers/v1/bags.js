@@ -7,6 +7,6 @@ router.get ('/', bagsController.getAll);
 router.get ('/:id', bagsController.getById);
 router.post('/', bagsController.create);
 router.put('/', bagsController.update);
-//router.delete('/', bagsController.destroy);
+router.delete('/:id', bagsController.destroy);
 
 module.exports = router;

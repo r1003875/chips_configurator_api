@@ -79,9 +79,31 @@ const update = (req, res) => {
     }));
 }
 
+const destroy = (req, res) => {
+    let id = req.params.id;
+    Bag.findByIdAndDelete(id)
+    .then(bag => {
+        if (!bag) {
+            return res.status(404).json({ message: 'Bag not found' });
+        }
+        res.json({
+            "status": "success",
+            "message": "Bag deleted",
+            "data": {
+                "bag": bag
+            }
+        });
+    })
+    .catch(err => res.status(500).send({
+        "status": "error",
+        "message": err.message,
+    }));
+};
+
 module.exports = {
     getAll,
     getById,
     create,
-    update
+    update,
+    destroy
 };
