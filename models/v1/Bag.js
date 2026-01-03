@@ -5,9 +5,6 @@ const BagSchema = new Schema({
     image: { type: String, required: true },
     color: { type: String, required: true },
     font: { type: String, required: true },
-    patern:{ type: String, required: true },
-    packaging: { type: String, required: true },
-    inspiration: { type: String, required: true },
     keyFlavours: { type: [String], required: true },
     user: { type: Schema.Types.ObjectId, ref: 'User', required: true }
 });

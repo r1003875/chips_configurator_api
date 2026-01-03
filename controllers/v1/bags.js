@@ -42,9 +42,6 @@ const create = (req, res) => {
     bag.image = req.body.image;
     bag.color = req.body.color;
     bag.font = req.body.font;
-    bag.patern = req.body.patern;
-    bag.packaging = req.body.packaging;
-    bag.inspiration = req.body.inspiration;
     bag.keyFlavours = req.body.keyFlavours;
     bag.user = req.body.user;
     bag.save()
@@ -61,8 +58,30 @@ const create = (req, res) => {
     }));
 }
 
+const update = (req, res) => {
+    let id = req.body.id;
+    Bag.findByIdAndUpdate(id, req.body, { new: true })
+    .then(bag => {
+        if (!bag) {
+            return res.status(404).json({ message: 'Bag not found' });
+        }
+        res.json({
+            "status": "success",
+            "message": "Bag updated",
+            "data": {
+                "bag": bag
+            }
+        });
+    })
+    .catch(err => res.status(500).send({
+        "status": "error",
+        "message": err.message,
+    }));
+}
+
 module.exports = {
     getAll,
     getById,
     create,
+    update
 };
