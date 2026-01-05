@@ -39,7 +39,8 @@ const login = async (req, res) => {
         return res.json({
             "status": "success",
             "message": "User logged in",
-            "isAdmin": result.isAdmin
+            "isAdmin": result.isAdmin,
+            "userId": result._id,
         });
     } catch (err) {
         return res.status(500).json({
