@@ -5,6 +5,7 @@ const UserSchema = new Schema({
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
     email: { type: String, required: true, unique: true },
+    isAdmin: { type: Boolean, default: false }
 });
 UserSchema.plugin(passportLocalMongoose.default, { usernameField: 'email' });
 const User = mongoose.model('User', UserSchema);
