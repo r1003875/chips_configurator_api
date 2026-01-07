@@ -1,4 +1,6 @@
 const Bag = require('../../models/v1/Bag');
+const streamifier = require('streamifier');
+const cloudinary = require('../../cloudinary');
 
 const getAll = (req, res) =>{
     Bag.find()
@@ -36,14 +38,39 @@ const getById = (req, res) => {
     }));
 }
 
-const create = (req, res) => {
+const create = async (req, res) => {
+    const { name, font, color, keyFlavours, user } = req.body;
+    const flavoursArray = JSON.parse(keyFlavours); // keyFlavours komt als JSON-string
+    //const user = req.user.id;
+    let imageUrl = "placeholder.png";
+    if (req.file) {
+      // upload image naar Cloudinary
+      const streamUpload = (req) => {
+        return new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            { folder: "bags" },
+            (error, result) => {
+                console.error("Cloudinary error:", error);
+              if (result) resolve(result);
+              else reject(error);
+            }
+          );
+          streamifier.createReadStream(req.file.buffer).pipe(stream);
+        });
+      };
+
+      const result = await streamUpload(req);
+      imageUrl = result.secure_url;
+    }
+
     const bag = new Bag();
     bag.name = req.body.name;
-    bag.image = req.body.image;
+    bag.image = imageUrl;
     bag.color = req.body.color;
     bag.font = req.body.font;
-    bag.keyFlavours = req.body.keyFlavours;
+    bag.keyFlavours = flavoursArray;
     bag.user = req.body.user;
+
     bag.save()
         .then(msg => res.status(201).send({
         "status": "success",
