@@ -6,7 +6,8 @@ const BagSchema = new Schema({
     color: { type: String, required: true },
     font: { type: String, required: true },
     keyFlavours: { type: [String], required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    screenshot: { type: String, required: false }
 });
 const Bag = mongoose.model('Bag', BagSchema);
 module.exports = Bag;

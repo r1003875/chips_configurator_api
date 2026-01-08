@@ -8,7 +8,7 @@ const upload = multer({ storage });
 // Routes
 router.get ('/', bagsController.getAll);
 router.get ('/:id', bagsController.getById);
-router.post('/', upload.single("image"), bagsController.create);
+router.post('/', upload.fields([{ name: "image", maxCount: 1 }, { name: "screenshot", maxCount: 1 }]), bagsController.create);
 router.put('/', bagsController.update);
 router.delete('/:id', bagsController.destroy);
 
