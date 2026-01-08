@@ -48,29 +48,41 @@ const getById = (req, res) => {
     }));
 }
 
-const create = (req, res) => {
-    const vote = new Vote();
-    vote.user = req.body.user;
-    vote.bag = req.body.bag;
+const getMyVotes = async (req, res) => {
+  try {
+    const votes = await Vote.find({ user: req.user.id });
 
-    vote.save()
-    .then(savedVote => {
-        res.status(201).json({
-            "status": "success",
-            "message": "Vote created successfully",
-            "data": {
-                "vote": savedVote
-            }
-        });
-    })
-    .catch(err => res.status(500).json({
-        "status": "error",
-        "message": err.message,
-    }));
+    res.json({
+      status: "success",
+      data: { votes }
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: err.message
+    });
+  }
+};
+
+const create = async (req, res) => {
+  const { bag } = req.body;
+
+  const vote = new Vote({
+    user: req.user.id, // 🔐 uit JWT
+    bag
+  });
+
+  await vote.save();
+
+  res.status(201).json({
+    status: "success",
+    message: "Vote cast"
+  });
 };
 
 module.exports = {
     getAll,
     create,
     getById,
+    getMyVotes
 };
