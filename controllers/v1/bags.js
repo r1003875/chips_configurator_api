@@ -53,31 +53,12 @@ const uploadToCloudinary = (file, folder) => {
 
 
 const create = async (req, res) => {
-    const { name, font, color, keyFlavours, user } = req.body;
+    const { name, font, color, keyFlavours } = req.body;
     const flavoursArray = JSON.parse(keyFlavours); // keyFlavours komt als JSON-string
-    //const user = req.user.id;
+    const user = req.user.id;
     let imageUrl = "placeholder.png";
     let screenshotUrl = "placeholder.png";
-    /*
-    if (req.file) {
-      // upload image naar Cloudinary
-      const streamUpload = (req) => {
-        return new Promise((resolve, reject) => {
-          const stream = cloudinary.uploader.upload_stream(
-            { folder: "bags" },
-            (error, result) => {
-              if (result) resolve(result);
-              else reject(error);
-            }
-          );
-          streamifier.createReadStream(req.file.buffer).pipe(stream);
-        });
-      };
 
-      const result = await streamUpload(req);
-      imageUrl = result.secure_url;
-    }
-*/
     if (req.files?.image?.[0]) {
       const result = await uploadToCloudinary(
         req.files.image[0],
@@ -99,7 +80,7 @@ const create = async (req, res) => {
     bag.color = req.body.color;
     bag.font = req.body.font;
     bag.keyFlavours = flavoursArray;
-    bag.user = req.body.user;
+    bag.user = user;
     bag.screenshot = screenshotUrl;
 
     bag.save()
